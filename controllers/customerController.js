@@ -101,7 +101,6 @@ export class CustomerController {
       if (messages.length === 0) {
         return res.json({ messages: [], latest: null, replies: [] });
       }
-      
       const latest = messages[0];
       const { data: replies = [] } = await this.db
         .schema('branchinternational')
@@ -110,7 +109,7 @@ export class CustomerController {
         .eq('customer_message_id', latest.id)
         .order('created_at', { ascending: true });
 
-      return res.json({ latest, replies });
+      return res.json({ latest, replies, messages});
     } catch (e) {
       console.error(e);
       res.status(500).json({ error: 'Internal server error' });
